@@ -11,12 +11,13 @@ defmodule GeoIP.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :httpoison],
+    [applications: [:logger, :httpoison, :cachex],
      mod: {GeoIP, []}]
   end
 
   defp deps do
     [{:httpoison, "~> 0.9"},
-     {:poison, "~> 2.0"}]
+     {:poison, "~> 2.0"},
+     {:cachex, "~> 1.2"}]
   end
 end

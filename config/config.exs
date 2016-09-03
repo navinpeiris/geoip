@@ -22,7 +22,9 @@ use Mix.Config
 #
 
 config :geoip, GeoIP,
-  url: "https://freegeoip.net"
+  url: "https://freegeoip.net",
+  cache: true,
+  cache_ttl_secs: 3600 # One hour
 
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
