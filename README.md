@@ -1,5 +1,11 @@
 # GeoIP
 
+[![Build Status](https://travis-ci.org/navinpeiris/geoip.svg?branch=master)](https://travis-ci.org/navinpeiris/geoip)
+[![Hex version](https://img.shields.io/hexpm/v/geoip.svg "Hex version")](https://hex.pm/packages/geoip)
+[![Hex downloads](https://img.shields.io/hexpm/dt/geoip.svg "Hex downloads")](https://hex.pm/packages/geoip)
+[![Deps Status](https://beta.hexfaktor.org/badge/all/github/navinpeiris/geoip.svg)](https://beta.hexfaktor.org/github/navinpeiris/geoip)
+[![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+
 Elixir library to lookup the geographic location for a given IP address (or hostname, or `Plug.Conn`).
 
 By default, the data is retrieved from [freegeoip.net](https://freegeoip.net), but you are can optionally use [your own freegeoip installation](https://github.com/fiorix/freegeoip) which is highly recommended for production environments.
