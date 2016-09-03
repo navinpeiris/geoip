@@ -7,7 +7,9 @@ defmodule GeoIP.Lookup do
 
   def lookup(host) when is_tuple(host), do: host |> Tuple.to_list |> Enum.join(".") |> lookup
 
-  def lookup("127.0.0.1" = ip), do: %Location{ip: ip}
+  def lookup("localhost"), do: lookup("127.0.0.1")
+
+  def lookup("127.0.0.1" = ip), do: {:ok, %Location{ip: ip}}
 
   def lookup(host) when is_binary(host) do
     case get_from_cache(host) do
