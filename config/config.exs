@@ -21,11 +21,6 @@ use Mix.Config
 #     config :logger, level: :info
 #
 
-config :geoip, GeoIP,
-  url: "https://freegeoip.net",
-  cache: true,
-  cache_ttl_secs: 3600 # One hour
-
 # It is also possible to import configuration files, relative to this
 # directory. For example, you can emulate configuration per environment
 # by uncommenting the line below and defining dev.exs, test.exs and such.

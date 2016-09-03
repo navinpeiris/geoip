@@ -53,34 +53,22 @@ This returns `{:ok, response}` if the lookup is successful, `{:error, %GeoIP.Err
 
 ## Configuration
 
-The default config:
-
-```elixir
-config :geoip, GeoIP,
-  url: "https://freegeoip.net",
-  cache: true,
-  cache_ttl_secs: 3600
-```
-
 You can change the freegeoip server that is used by specifying the value of the `url` option:
 
 ```elixir
-config :geoip, GeoIP,
-  url: "https://geoip.example.com"
+config :geoip, url: "https://geoip.example.com"
 ```
 
 By default, the location results returned by the freegeoip server is cached for an hour. We can disable the cache by:
 
 ```elixir
-config :geoip, GeoIP,
-  cache: false
+config :geoip, cache: false
 ```
 
 Or to change the time limit of cached results:
 
 ```elixir
-config :geoip, GeoIP,
-  cache_ttl_secs: 1800 # 30 mins
+config :geoip, cache_ttl_secs: 1800 # 30 mins
 ```
 
 ## License
