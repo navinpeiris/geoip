@@ -3,7 +3,7 @@ defmodule GeoIP.Mixfile do
 
   def project do
     [app: :geoip,
-     version: "0.1.0",
+     version: "0.1.1",
      name: "GeoIP",
      description: "Lookup the geo location for a given IP address, hostname or Plug.Conn instance",
      package: package,
