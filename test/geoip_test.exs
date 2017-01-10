@@ -37,7 +37,7 @@ defmodule GeoIPTest do
     end
 
     test "returns location when given a valid host name" do
-      {:ok, location} = GeoIP.lookup("google.com")
+      {:ok, location} = GeoIP.lookup("github.com")
 
       assert location.country_code == "US"
       assert location.country_name == "United States"
