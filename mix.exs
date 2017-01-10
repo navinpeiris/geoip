@@ -6,13 +6,13 @@ defmodule GeoIP.Mixfile do
      version: "0.1.1",
      name: "GeoIP",
      description: "Lookup the geo location for a given IP address, hostname or Plug.Conn instance",
-     package: package,
+     package: package(),
      source_url: "https://github.com/navinpeiris/geoip",
      homepage_url: "https://github.com/navinpeiris/geoip",
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
+     deps: deps(),
      docs: [extras: ["README.md"]]]
   end
 
