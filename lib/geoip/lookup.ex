@@ -2,8 +2,13 @@ defmodule GeoIP.Lookup do
   alias GeoIP.{Config, Location, Error}
 
   def lookup(nil), do: %Location{}
-
-  def lookup(%{remote_ip: host}), do: lookup(host)
+  
+  def lookup(%Plug.Conn{remote_ip: host} = conn) do
+    case Plug.Conn.get_req_header(conn, "x-forwarded-for") do
+      [forwarded_ip] -> lookup(forwarded_ip)
+      [] -> lookup(host)
+    end
+  end
 
   def lookup(host) when is_tuple(host), do: host |> Tuple.to_list |> Enum.join(".") |> lookup
 
