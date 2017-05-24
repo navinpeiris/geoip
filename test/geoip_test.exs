@@ -48,7 +48,7 @@ defmodule GeoIPTest do
     end
 
     test "returns location when given a `conn` struct" do
-      {:ok, location} = GeoIP.lookup(%{remote_ip: {8, 8, 8, 8}})
+      {:ok, location} = GeoIP.lookup(%Plug.Conn{remote_ip: {8, 8, 8, 8}})
 
       assert location.ip == "8.8.8.8"
       assert location.city == "Mountain View"
@@ -56,5 +56,21 @@ defmodule GeoIPTest do
       assert location.country_code == "US"
       assert location.country_name == "United States"
     end
+
+    test "returns x-forward-for if when given a `conn` struct behind a proxy" do
+      {:ok, location} = GeoIP.lookup(
+        %Plug.Conn{
+          remote_ip: {8, 8, 8, 8}, 
+          req_headers: [{"x-forwarded-for", "1.2.3.4"}]
+        }
+      )
+      assert location.ip == "1.2.3.4"
+      assert location.city == "Mukilteo"
+      assert location.region_name == "Washington"
+      assert location.country_code == "US"
+      assert location.country_name == "United States"
+    end
+
+
   end
 end
