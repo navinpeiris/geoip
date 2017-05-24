@@ -71,6 +71,10 @@ Or to change the time limit of cached results:
 config :geoip, cache_ttl_secs: 1800 # 30 mins
 ```
 
+## Determining your `remote_ip` when behind a proxy
+
+If your application is running behind a proxy, we recommend using [ajvondrak/remote_ip](https://github.com/ajvondrak/remote_ip) or something similar to override the `remote_ip` field of `Plug.Conn`. Due to the various different ways of determining the applications remote ip depending on your deployment environment, we leave this up to you to configure as appropriate.
+
 ## License
 
 The MIT License
