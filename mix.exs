@@ -25,7 +25,7 @@ defmodule GeoIP.Mixfile do
   end
 
   defp deps do
-    [{:httpoison, "~> 0.9"},
+    [{:httpoison, "~> 1.0"},
      {:poison, "~> 2.0 or ~> 3.0"},
      {:cachex, "~> 2.0"},
 
