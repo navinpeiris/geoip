@@ -13,20 +13,20 @@ defmodule GeoIPTest do
     end
 
     test "returns location when given a valid IP address as string" do
-      {:ok, location} = GeoIP.lookup("8.8.8.8")
+      {:ok, location} = GeoIP.lookup("192.30.253.113")
 
-      assert location.ip == "8.8.8.8"
-      assert location.city == "Mountain View"
+      assert location.ip == "192.30.253.113"
+      assert location.city == "San Francisco"
       assert location.region_name == "California"
       assert location.country_code == "US"
       assert location.country_name == "United States"
     end
 
     test "returns location when given a valid IP address as tuple" do
-      {:ok, location} = GeoIP.lookup({8, 8, 8, 8})
+      {:ok, location} = GeoIP.lookup({192, 30, 253, 113})
 
-      assert location.ip == "8.8.8.8"
-      assert location.city == "Mountain View"
+      assert location.ip == "192.30.253.113"
+      assert location.city == "San Francisco"
       assert location.region_name == "California"
       assert location.country_code == "US"
       assert location.country_name == "United States"
@@ -48,10 +48,10 @@ defmodule GeoIPTest do
     end
 
     test "returns location when given a `conn` struct" do
-      {:ok, location} = GeoIP.lookup(%{remote_ip: {8, 8, 8, 8}})
+      {:ok, location} = GeoIP.lookup(%{remote_ip: {192, 30, 253, 113}})
 
-      assert location.ip == "8.8.8.8"
-      assert location.city == "Mountain View"
+      assert location.ip == "192.30.253.113"
+      assert location.city == "San Francisco"
       assert location.region_name == "California"
       assert location.country_code == "US"
       assert location.country_name == "United States"

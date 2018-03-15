@@ -4,11 +4,20 @@ defmodule GeoIP do
 
       iex> GeoIP.lookup("google.com")
       {:ok,
-       %GeoIP.Location{city: "Mountain View", country_code: "US",
-        country_name: "United States", ip: "172.217.4.78", latitude: 37.4192,
-        longitude: -122.0574, metro_code: 807, region_code: "CA",
-        region_name: "California", time_zone: "America/Los_Angeles",
-        zip_code: "94043"}}
+       %GeoIP.Location{
+        city: "San Francisco",
+        country_code: "US",
+        country_name: "United States",
+        ip: "192.30.253.113",
+        latitude: 37.7697,
+        longitude: -122.3933,
+        metro_code: 807,
+        region_code: "CA",
+        region_name: "California",
+        time_zone: "America/Los_Angeles",
+        zip_code: "94107"
+        }
+      }
   """
 
   use Application
