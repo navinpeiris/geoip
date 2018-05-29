@@ -13,7 +13,7 @@ defmodule GeoIP.Lookup do
 
   def lookup(host) when is_binary(host) do
     case get_from_cache(host) do
-      {:ok, location} -> {:ok, location}
+      {:ok, location} when not is_nil(location) -> {:ok, location}
       _ -> host |> lookup_url |> HTTPoison.get |> parse_response |> put_in_cache(host)
     end
   end
