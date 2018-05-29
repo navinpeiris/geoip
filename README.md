@@ -1,3 +1,5 @@
+<p align="center"><img src="logo/verticalversion.png" alt="geoip" height="200px"></p>
+
 # GeoIP
 
 [![Build Status](https://travis-ci.org/navinpeiris/geoip.svg?branch=master)](https://travis-ci.org/navinpeiris/geoip)
