@@ -77,6 +77,10 @@ config :geoip, cache_ttl_secs: 1800 # 30 mins
 
 If your application is running behind a proxy, we recommend using [ajvondrak/remote_ip](https://github.com/ajvondrak/remote_ip) or something similar to override the `remote_ip` field of `Plug.Conn`. Due to the various different ways of determining the applications remote ip depending on your deployment environment, we leave this up to you to configure as appropriate.
 
+## GeoIP logo
+
+Special thanks to [@batarian71](https://github.com/batarian71) for designing and providing this project with an awesome logo
+
 ## License
 
 The MIT License
