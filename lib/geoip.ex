@@ -22,12 +22,13 @@ defmodule GeoIP do
 
   use Application
   alias GeoIP.Config
+  import Cachex.Spec
 
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Cachex, [:geoip_lookup_cache, [default_ttl: :timer.seconds(Config.cache_ttl_secs)]])
+      worker(Cachex, [:geoip_lookup_cache, [expiration: expiration(default: :timer.seconds(Config.cache_ttl_secs))]])
     ]
 
     opts = [strategy: :one_for_one, name: GeoIP.Supervisor]
