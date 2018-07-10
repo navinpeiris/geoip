@@ -294,4 +294,87 @@ defmodule GeoIPTest do
       end
     end
   end
+
+
+  describe "lookup/1 using ipinfo" do
+    @ipinfo_response_body ~s({
+      "ip": "8.8.8.8",
+      "hostname": "google-public-dns-a.google.com",
+      "loc": "37.385999999999996,-122.0838",
+      "org": "AS15169 Google Inc.",
+      "city": "Mountain View",
+      "region": "California",
+      "country": "US",
+      "phone": 650
+    })
+
+    @ipinfo_test_ip_url "https://ipinfo.io/192.30.253.113/json?token=ipinfo-api-key"
+
+    def assert_valid_ipinfo_location(location) do
+      assert location.city == "Mountain View"
+      assert location.region == "California"
+      assert location.country == "US"
+    end
+
+    setup do
+      Application.put_env(:geoip, :provider, :ipinfo)
+      Application.put_env(:geoip, :api_key, "ipinfo-api-key")
+
+      :ok
+    end
+
+    test "returns empty result when given localhost" do
+      {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
+    end
+
+    test "returns empty result when given localhost ip" do
+      {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("127.0.0.1")
+    end
+
+    test "returns location when given a valid IP address as string" do
+      with_mock(HTTPoison, [
+        get: fn(@ipinfo_test_ip_url) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: @ipinfo_response_body}}
+        end
+      ]) do
+        {:ok, location} = GeoIP.lookup("192.30.253.113")
+
+        assert_valid_ipinfo_location location
+      end
+    end
+
+    test "returns location when given a valid IP address as tuple" do
+      with_mock(HTTPoison, [
+        get: fn(@ipinfo_test_ip_url) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: @ipinfo_response_body}}
+        end
+      ]) do
+        {:ok, location} = GeoIP.lookup({192, 30, 253, 113})
+
+        assert_valid_ipinfo_location location
+      end
+    end
+
+    test "returns location when given a `conn` struct" do
+      with_mock(HTTPoison, [
+        get: fn(@ipinfo_test_ip_url) ->
+          {:ok, %HTTPoison.Response{status_code: 200, body: @ipinfo_response_body}}
+        end
+      ]) do
+        {:ok, location} = GeoIP.lookup(%{remote_ip: {192, 30, 253, 113}})
+
+        assert_valid_ipinfo_location location
+      end
+    end
+
+    test "returns error when given a invalid IP address" do
+      with_mock(HTTPoison, [
+        get: fn("https://ipinfo.io/8.8/json?token=ipinfo-api-key") ->
+          {:ok, %HTTPoison.Response{status_code: 404, body: "404 page not found"}}
+        end
+      ]) do
+        {:error, _} = GeoIP.lookup("8.8")
+      end
+    end
+  end
 end

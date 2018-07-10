@@ -5,6 +5,8 @@ defmodule GeoIP.Config do
 
   def api_key!, do: get!(:api_key)
 
+  def api_key, do: get(:api_key)
+
   def use_https, do: get(:use_https)
 
   def cache_enabled?, do: get(:cache)

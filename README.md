@@ -57,7 +57,15 @@ config :geoip, provider: :freegeoip, url: "https://geoip.example.com"
 NOTE: The free tier does not allow https access so you _must_ specify `use_https: false` below.
 
 ```elixir
-config :geoip, provider: :ipstack, api_key: "your-api-key", use_https: true
+config :geoip, provider: :ipstack, api_key: "your-api-key"
+```
+
+#### ipinfo
+
+[ipinfo](ipinfo.io) does not unfortunately support lookup by hostname (only ip address), therefore the above examples where a hostname is used will return an error.
+
+```elixir
+config :geoip, provider: :ipinfo, api_key: "your-api-key"
 ```
 
 ### Caching

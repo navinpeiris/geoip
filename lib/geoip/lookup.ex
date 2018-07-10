@@ -53,19 +53,19 @@ defmodule GeoIP.Lookup do
   defp lookup_url(host), do: lookup_url(Config.provider!, host)
 
   defp lookup_url(:freegeoip, host), do: "#{Config.url!}/json/#{host}"
-  defp lookup_url(:ipstack, host) do
-    protocol =
-      if Config.use_https do
-        "https"
-      else
-        "http"
-      end
-
-    "#{protocol}://api.ipstack.com/#{host}?access_key=#{Config.api_key!}"
-  end
+  defp lookup_url(:ipstack, host), do: "#{http_protocol()}://api.ipstack.com/#{host}?access_key=#{Config.api_key!}"
+  defp lookup_url(:ipinfo, host), do: "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key}"
 
   defp lookup_url(provider, _host) do
     raise ArgumentError,
           "Unknown provider: '#{inspect(provider)}'. Please check your geoip configuration."
+  end
+
+  defp http_protocol do
+    if Config.use_https do
+      "https"
+    else
+      "http"
+    end
   end
 end
