@@ -13,8 +13,14 @@ defmodule GeoIP.Lookup do
 
   def lookup(host) when is_binary(host) do
     case get_from_cache(host) do
-      {:ok, location} when not is_nil(location) -> {:ok, location}
-      _ -> host |> lookup_url |> HTTPoison.get |> parse_response |> put_in_cache(host)
+      {:ok, location} when not is_nil(location) ->
+        {:ok, location}
+      _ ->
+        host
+        |> lookup_url
+        |> HTTPoison.get
+        |> parse_response
+        |> put_in_cache(host)
     end
   end
 
@@ -44,5 +50,11 @@ defmodule GeoIP.Lookup do
     {:error, %Error{reason: "Error looking up host: #{inspect(result)}"}}
   end
 
-  defp lookup_url(host), do: "#{Config.base_url}/json/#{host}"
+  defp lookup_url(host), do: lookup_url(Config.provider!, host)
+
+  defp lookup_url(:freegeoip, host), do: "#{Config.url!}/json/#{host}"
+  defp lookup_url(provider, _host) do
+    raise ArgumentError,
+          "Unknown provider: '#{inspect(provider)}'. Please check your geoip configuration."
+  end
 end

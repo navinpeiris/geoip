@@ -37,6 +37,32 @@ The returned results are cached for an hour by default so that we don't hit the 
   end
   ```
 
+## Configuration
+
+### Provider
+
+The provider must be explicity specified along with any required attributes as per examples below.
+
+### freegeoip
+
+```elixir
+config :geoip, url: "https://geoip.example.com"
+```
+
+### Caching
+
+By default, the location results returned by the freegeoip server is cached for an hour. We can disable the cache by:
+
+```elixir
+config :geoip, cache: false
+```
+
+Or to change the time limit of cached results:
+
+```elixir
+config :geoip, cache_ttl_secs: 1800 # 30 mins
+```
+
 ## Usage
 
 You can pass in an IP address (as a string or a struct), hostname or a `Plug.Conn` struct to be looked up.
@@ -53,25 +79,6 @@ GeoIP.lookup(conn)
 
 This returns `{:ok, response}` if the lookup is successful, `{:error, %GeoIP.Error{reason: reason}}` otherwise.
 
-## Configuration
-
-You can change the freegeoip server that is used by specifying the value of the `url` option:
-
-```elixir
-config :geoip, url: "https://geoip.example.com"
-```
-
-By default, the location results returned by the freegeoip server is cached for an hour. We can disable the cache by:
-
-```elixir
-config :geoip, cache: false
-```
-
-Or to change the time limit of cached results:
-
-```elixir
-config :geoip, cache_ttl_secs: 1800 # 30 mins
-```
 
 ## Determining your `remote_ip` when behind a proxy
 

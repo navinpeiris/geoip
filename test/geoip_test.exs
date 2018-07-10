@@ -3,6 +3,40 @@ defmodule GeoIPTest do
 
   import Mock
 
+  setup do
+    Application.put_env(:geoip, :cache, false)
+
+    :ok
+  end
+
+  describe "lookup/1 when provider is not specified" do
+    setup do
+      Application.put_env(:geoip, :provider, nil)
+
+      :ok
+    end
+
+    test "throws an error" do
+      assert_raise ArgumentError, fn ->
+        GeoIP.lookup("github.com")
+      end
+    end
+  end
+
+  describe "lookup/1 when provider is not known" do
+    setup do
+      Application.put_env(:geoip, :provider, :invalid)
+
+      :ok
+    end
+
+    test "throws an error" do
+      assert_raise ArgumentError, fn ->
+        GeoIP.lookup("github.com")
+      end
+    end
+  end
+
   describe "lookup/1 using freegeoip" do
     @freegeoip_response_body ~s({
                                   "ip": "192.30.253.113",
@@ -24,6 +58,12 @@ defmodule GeoIPTest do
       assert location.region_name == "California"
       assert location.country_code == "US"
       assert location.country_name == "United States"
+    end
+
+    setup do
+      Application.put_env(:geoip, :provider, :freegeoip)
+
+      :ok
     end
 
     test "returns empty result when given localhost" do
