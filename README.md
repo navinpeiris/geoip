@@ -43,7 +43,7 @@ You can pass in an IP address (as a string or a struct), hostname or a `Plug.Con
 
 ```elixir
 GeoIP.lookup("google.com")
-#=> {:ok, %GeoIP.Location{city: "Mountain View", country_code: "US", country_name: "United States", ip: "172.217.4.78", latitude: 37.4192, longitude: -122.0574, metro_code: 807, region_code: "CA", region_name: "California", time_zone: "America/Los_Angeles", zip_code: "94043"}}
+#=> {:ok, %{city: "Mountain View", country_code: "US", country_name: "United States", ip: "172.217.4.78", latitude: 37.4192, longitude: -122.0574, metro_code: 807, region_code: "CA", region_name: "California", time_zone: "America/Los_Angeles", zip_code: "94043"}}
 
 # Other examples:
 GeoIP.lookup("8.8.8.8")

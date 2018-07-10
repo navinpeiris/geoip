@@ -4,7 +4,7 @@ defmodule GeoIP do
 
       iex> GeoIP.lookup("google.com")
       {:ok,
-       %GeoIP.Location{
+       %{
         city: "San Francisco",
         country_code: "US",
         country_name: "United States",

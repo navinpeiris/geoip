@@ -1,7 +1,7 @@
 defmodule GeoIP.Lookup do
-  alias GeoIP.{Config, Location, Error}
+  alias GeoIP.{Config, Error}
 
-  def lookup(nil), do: %Location{}
+  def lookup(nil), do: %{}
 
   def lookup(%{remote_ip: host}), do: lookup(host)
 
@@ -9,7 +9,7 @@ defmodule GeoIP.Lookup do
 
   def lookup("localhost"), do: lookup("127.0.0.1")
 
-  def lookup("127.0.0.1" = ip), do: {:ok, %Location{ip: ip}}
+  def lookup("127.0.0.1" = ip), do: {:ok, %{ip: ip}}
 
   def lookup(host) when is_binary(host) do
     case get_from_cache(host) do
@@ -29,7 +29,7 @@ defmodule GeoIP.Lookup do
   defp put_in_cache(result, _), do: result
 
   defp parse_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    {:ok, Poison.decode!(body, as: %Location{})}
+    {:ok, Poison.Parser.parse!(body, keys: :atoms)}
   end
 
   defp parse_response({:ok, %HTTPoison.Response{status_code: _, body: body}}) do

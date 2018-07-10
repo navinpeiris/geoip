@@ -3,8 +3,6 @@ defmodule GeoIPTest do
 
   import Mock
 
-  alias GeoIP.Location
-
   describe "lookup/1 using freegeoip" do
     @freegeoip_response_body ~s({
                                   "ip": "192.30.253.113",
@@ -21,11 +19,11 @@ defmodule GeoIPTest do
                                   })
 
     test "returns empty result when given localhost" do
-      {:ok, %Location{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
+      {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
     end
 
     test "returns empty result when given localhost ip" do
-      {:ok, %Location{ip: "127.0.0.1"}} = GeoIP.lookup("127.0.0.1")
+      {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("127.0.0.1")
     end
 
     test "returns location when given a valid IP address as string" do
