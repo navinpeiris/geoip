@@ -5,12 +5,9 @@
 [![Build Status](https://travis-ci.org/navinpeiris/geoip.svg?branch=master)](https://travis-ci.org/navinpeiris/geoip)
 [![Hex version](https://img.shields.io/hexpm/v/geoip.svg "Hex version")](https://hex.pm/packages/geoip)
 [![Hex downloads](https://img.shields.io/hexpm/dt/geoip.svg "Hex downloads")](https://hex.pm/packages/geoip)
-[![Deps Status](https://beta.hexfaktor.org/badge/all/github/navinpeiris/geoip.svg)](https://beta.hexfaktor.org/github/navinpeiris/geoip)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
-Elixir library to lookup the geographic location for a given IP address (or hostname, or `Plug.Conn`).
-
-By default, the data is retrieved from [freegeoip.net](https://freegeoip.net), but you are can optionally use [your own freegeoip installation](https://github.com/fiorix/freegeoip) which is highly recommended for production environments.
+Elixir library to lookup the geographic location for a given IP address, hostname, or `Plug.Conn`.
 
 The returned results are cached for an hour by default so that we don't hit the service unnecessarily, but this is configurable can be disabled using the config options (see below).
 
@@ -29,7 +26,7 @@ The returned results are cached for an hour by default so that we don't hit the 
   mix deps.get
   ```
 
-2. Ensure `geoip` is started before your application:
+3. Add `geoip` to your applications list if you're using Elixir version 1.3 or lower
 
   ```elixir
   def application do
@@ -41,12 +38,26 @@ The returned results are cached for an hour by default so that we don't hit the 
 
 ### Provider
 
-The provider must be explicity specified along with any required attributes as per examples below.
+The provider must be explicitly specified along with any required attributes as per examples below.
 
-### freegeoip
+#### freegeoip
+
+The free host that was available at `freegeoip.net` and the corresponding source repository at
+[fiorix/freegeoip](https://github.com/fiorix/freegeoip) was deprecated in the middle of 2018, but
+it still allows you to launch your own instance if you wish.
 
 ```elixir
-config :geoip, url: "https://geoip.example.com"
+config :geoip, provider: :freegeoip, url: "https://geoip.example.com"
+```
+
+#### ipstack
+
+[ipstack](ipstack.com) provides a free tier although it requires you to sign up and get an api key first.
+
+NOTE: The free tier does not allow https access so you _must_ specify `use_https: false` below.
+
+```elixir
+config :geoip, provider: :ipstack, api_key: "your-api-key", use_https: true
 ```
 
 ### Caching
