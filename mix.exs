@@ -25,10 +25,15 @@ defmodule GeoIP.Mixfile do
   end
 
   defp deps do
-    [{:httpoison, "~> 1.0"},
-     {:poison, "~> 2.0 or ~> 3.0"},
-     {:cachex, "~> 3.0"},
-     {:ex_doc, ">= 0.0.0", only: :dev}]
+    [
+      {:httpoison, "~> 1.0"},
+      {:poison, "~> 2.0 or ~> 3.0"},
+      {:cachex, "~> 3.0"},
+
+      {:ex_doc, ">= 0.0.0", only: :dev},
+
+      {:mock, "~> 0.3", only: :test}
+    ]
   end
 
   defp package do
