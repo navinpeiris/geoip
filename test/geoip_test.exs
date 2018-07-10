@@ -18,6 +18,14 @@ defmodule GeoIPTest do
                                   "metro_code": 807
                                   })
 
+    def assert_valid_freegeoip_location(location) do
+      assert location.ip == "192.30.253.113"
+      assert location.city == "San Francisco"
+      assert location.region_name == "California"
+      assert location.country_code == "US"
+      assert location.country_name == "United States"
+    end
+
     test "returns empty result when given localhost" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
     end
@@ -34,11 +42,7 @@ defmodule GeoIPTest do
       ]) do
         {:ok, location} = GeoIP.lookup("192.30.253.113")
 
-        assert location.ip == "192.30.253.113"
-        assert location.city == "San Francisco"
-        assert location.region_name == "California"
-        assert location.country_code == "US"
-        assert location.country_name == "United States"
+        assert_valid_freegeoip_location location
       end
     end
 
@@ -50,11 +54,7 @@ defmodule GeoIPTest do
       ]) do
         {:ok, location} = GeoIP.lookup({192, 30, 253, 113})
 
-        assert location.ip == "192.30.253.113"
-        assert location.city == "San Francisco"
-        assert location.region_name == "California"
-        assert location.country_code == "US"
-        assert location.country_name == "United States"
+        assert_valid_freegeoip_location location
       end
     end
 
@@ -66,11 +66,7 @@ defmodule GeoIPTest do
       ]) do
         {:ok, location} = GeoIP.lookup(%{remote_ip: {192, 30, 253, 113}})
 
-        assert location.ip == "192.30.253.113"
-        assert location.city == "San Francisco"
-        assert location.region_name == "California"
-        assert location.country_code == "US"
-        assert location.country_name == "United States"
+        assert_valid_freegeoip_location location
       end
     end
 
@@ -82,8 +78,7 @@ defmodule GeoIPTest do
       ]) do
         {:ok, location} = GeoIP.lookup("github.com")
 
-        assert location.country_code == "US"
-        assert location.country_name == "United States"
+        assert_valid_freegeoip_location location
       end
     end
 
