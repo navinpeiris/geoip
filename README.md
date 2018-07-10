@@ -17,7 +17,7 @@ The returned results are cached for an hour by default so that we don't hit the 
 
   ```elixir
   def deps do
-    [{:geoip, "~> 0.1"}]
+    [{:geoip, "~> 0.2"}]
   end
   ```
 
