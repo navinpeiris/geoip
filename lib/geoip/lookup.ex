@@ -18,11 +18,18 @@ defmodule GeoIP.Lookup do
 
       _ ->
         host
-        |> lookup_url
-        |> HTTPoison.get()
-        |> parse_response
+        |> get_from_provider
         |> put_in_cache(host)
     end
+  end
+
+  defp get_from_provider(host), do: host |> get_from_provider(Config.provider!())
+
+  defp get_from_provider(host, provider) do
+    host
+    |> lookup_url(provider)
+    |> HTTPoison.get()
+    |> parse_response
   end
 
   defp get_from_cache(host) do
@@ -53,17 +60,15 @@ defmodule GeoIP.Lookup do
     {:error, %Error{reason: "Error looking up host: #{inspect(result)}"}}
   end
 
-  defp lookup_url(host), do: lookup_url(Config.provider!(), host)
+  defp lookup_url(host, :freegeoip), do: "#{Config.url!()}/json/#{host}"
 
-  defp lookup_url(:freegeoip, host), do: "#{Config.url!()}/json/#{host}"
-
-  defp lookup_url(:ipstack, host),
+  defp lookup_url(host, :ipstack),
     do: "#{http_protocol()}://api.ipstack.com/#{host}?access_key=#{Config.api_key!()}"
 
-  defp lookup_url(:ipinfo, host),
+  defp lookup_url(host, :ipinfo),
     do: "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key()}"
 
-  defp lookup_url(provider, _host) do
+  defp lookup_url(_host, provider) do
     raise ArgumentError,
           "Unknown provider: '#{inspect(provider)}'. Please check your geoip configuration."
   end
