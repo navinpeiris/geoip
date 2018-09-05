@@ -28,7 +28,7 @@ defmodule GeoIP.Lookup do
   defp get_from_provider(host), do: host |> get_from_provider(Config.provider!())
 
   defp get_from_provider(host, :test) do
-    Map.get(Config.test_results(), host, Config.default_test_result())
+    {:ok, Map.get(Config.test_results(), host, Config.default_test_result())}
   end
 
   defp get_from_provider(host, _provider) when host in @localhosts, do: {:ok, %{ip: "127.0.0.1"}}

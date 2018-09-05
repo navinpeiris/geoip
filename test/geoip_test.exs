@@ -48,28 +48,28 @@ defmodule GeoIPTest do
       Application.put_env(:geoip, :test_results, nil)
       Application.put_env(:geoip, :default_test_result, nil)
 
-      assert GeoIP.lookup("github.com") == nil
+      assert GeoIP.lookup("github.com") == {:ok, nil}
     end
 
     test "returns default test result if configured" do
       Application.put_env(:geoip, :test_results, nil)
       Application.put_env(:geoip, :default_test_result, %{ip: "123.123.123.123"})
 
-      assert GeoIP.lookup("github.com") == %{ip: "123.123.123.123"}
+      assert GeoIP.lookup("github.com") == {:ok, %{ip: "123.123.123.123"}}
     end
 
     test "returns matching test result if configured" do
       Application.put_env(:geoip, :test_results, %{"github.com" => %{ip: "1.1.1.1"}})
       Application.put_env(:geoip, :default_test_result, %{ip: "123.123.123.123"})
 
-      assert GeoIP.lookup("github.com") == %{ip: "1.1.1.1"}
+      assert GeoIP.lookup("github.com") == {:ok, %{ip: "1.1.1.1"}}
     end
 
     test "returns test results for local ip addresses" do
       Application.put_env(:geoip, :test_results, nil)
       Application.put_env(:geoip, :default_test_result, %{ip: "123.123.123.123"})
 
-      assert GeoIP.lookup("127.0.0.1") == %{ip: "123.123.123.123"}
+      assert GeoIP.lookup("127.0.0.1") == {:ok, %{ip: "123.123.123.123"}}
     end
   end
 
