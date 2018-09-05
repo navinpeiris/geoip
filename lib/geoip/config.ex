@@ -13,7 +13,13 @@ defmodule GeoIP.Config do
 
   def cache_ttl_secs, do: get(:cache_ttl_secs)
 
-  defp get!(key), do: get(key) || raise(ArgumentError, "Missing configuration parameter `:#{key}`")
+  def test_results, do: get(:test_results) || %{}
+
+  def default_test_result, do: get(:default_test_result)
+
+  defp get!(key) do
+    get(key) || raise(ArgumentError, "Missing configuration parameter `:#{key}`")
+  end
 
   defp get(key), do: Application.get_env(:geoip, key)
 end
