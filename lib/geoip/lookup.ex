@@ -5,7 +5,7 @@ defmodule GeoIP.Lookup do
 
   def lookup(%{remote_ip: host}), do: lookup(host)
 
-  def lookup(host) when is_tuple(host), do: host |> Tuple.to_list |> Enum.join(".") |> lookup
+  def lookup(host) when is_tuple(host), do: host |> Tuple.to_list() |> Enum.join(".") |> lookup
 
   def lookup("localhost"), do: lookup("127.0.0.1")
 
@@ -15,23 +15,26 @@ defmodule GeoIP.Lookup do
     case get_from_cache(host) do
       {:ok, location} when not is_nil(location) ->
         {:ok, location}
+
       _ ->
         host
         |> lookup_url
-        |> HTTPoison.get
+        |> HTTPoison.get()
         |> parse_response
         |> put_in_cache(host)
     end
   end
 
   defp get_from_cache(host) do
-    if Config.cache_enabled?, do: Cachex.get(:geoip_lookup_cache, host)
+    if Config.cache_enabled?(), do: Cachex.get(:geoip_lookup_cache, host)
   end
 
   defp put_in_cache({:ok, location} = result, host) do
-    if Config.cache_enabled?, do: Cachex.set(:geoip_lookup_cache, host, location)
+    if Config.cache_enabled?(), do: Cachex.put(:geoip_lookup_cache, host, location)
+
     result
   end
+
   defp put_in_cache(result, _), do: result
 
   defp parse_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
@@ -50,11 +53,15 @@ defmodule GeoIP.Lookup do
     {:error, %Error{reason: "Error looking up host: #{inspect(result)}"}}
   end
 
-  defp lookup_url(host), do: lookup_url(Config.provider!, host)
+  defp lookup_url(host), do: lookup_url(Config.provider!(), host)
 
-  defp lookup_url(:freegeoip, host), do: "#{Config.url!}/json/#{host}"
-  defp lookup_url(:ipstack, host), do: "#{http_protocol()}://api.ipstack.com/#{host}?access_key=#{Config.api_key!}"
-  defp lookup_url(:ipinfo, host), do: "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key}"
+  defp lookup_url(:freegeoip, host), do: "#{Config.url!()}/json/#{host}"
+
+  defp lookup_url(:ipstack, host),
+    do: "#{http_protocol()}://api.ipstack.com/#{host}?access_key=#{Config.api_key!()}"
+
+  defp lookup_url(:ipinfo, host),
+    do: "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key()}"
 
   defp lookup_url(provider, _host) do
     raise ArgumentError,
@@ -62,7 +69,7 @@ defmodule GeoIP.Lookup do
   end
 
   defp http_protocol do
-    if Config.use_https do
+    if Config.use_https() do
       "https"
     else
       "http"
