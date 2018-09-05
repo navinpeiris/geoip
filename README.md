@@ -68,6 +68,31 @@ config :geoip, provider: :ipstack, api_key: "your-api-key"
 config :geoip, provider: :ipinfo, api_key: "your-api-key"
 ```
 
+#### test
+
+Provides an easy way to provide mock lookup data in test environments.
+
+The `test_results` param is a map of host to lookup results that should be returned. If the ip/host looked up is not found in this map, then the results provided by the `default_test_result` param is provided.
+
+```elixir
+config :geoip,
+       provider: :test,
+       test_results: %{ # optional
+         "host.1" => %{
+           ip: "123.123.123.123",
+           # ......
+         },
+         "host.2" => %{
+           ip: "1.1.1.1",
+           # ......
+         },
+       },
+       default_test_result: %{ # optional
+         ip: "192.168.3.3",
+         # ......
+       }
+```
+
 ### Caching
 
 By default, the location results returned by the freegeoip server is cached for an hour. We can disable the cache by:
@@ -98,6 +123,9 @@ GeoIP.lookup(conn)
 
 This returns `{:ok, response}` if the lookup is successful, `{:error, %GeoIP.Error{reason: reason}}` otherwise.
 
+## Testing
+
+Please see the `test` provider above.
 
 ## Determining your `remote_ip` when behind a proxy
 
