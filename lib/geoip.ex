@@ -28,7 +28,10 @@ defmodule GeoIP do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(Cachex, [:geoip_lookup_cache, [expiration: expiration(default: :timer.seconds(Config.cache_ttl_secs))]])
+      worker(Cachex, [
+        :geoip_lookup_cache,
+        [expiration: expiration(default: :timer.seconds(Config.cache_ttl_secs()))]
+      ])
     ]
 
     opts = [strategy: :one_for_one, name: GeoIP.Supervisor]

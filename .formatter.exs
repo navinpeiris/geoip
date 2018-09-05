@@ -1,6 +1,10 @@
 [
   inputs: [
-    "lib/*/{lib,test}/**/*.{ex,exs}",
-    "lib/*/mix.exs"
+    "*.exs",
+    "config/*.exs",
+    "lib/**/*.ex",
+    "priv/**/*.exs",
+    "scripts/*.exs",
+    "test/**/*.{ex,exs}"
   ]
 ]
