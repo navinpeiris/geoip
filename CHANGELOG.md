@@ -1,5 +1,9 @@
 # v0.2.1
 
+* Fixes issue where the `test` provider wasn't returning configured results for localhost.
+
+# v0.2.1
+
 * Adds a `test` provider for returning lookup data in test environments.
 
 # v0.2.0
