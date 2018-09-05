@@ -1,3 +1,7 @@
+# v0.2.1
+
+* Adds a `test` provider for returning lookup data in test environments.
+
 # v0.2.0
 
 * Provides integrations with [ipstack.com](http://ipstack.com) and [ipinfo.io](http://ipinfo.io).
