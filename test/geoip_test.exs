@@ -64,6 +64,13 @@ defmodule GeoIPTest do
 
       assert GeoIP.lookup("github.com") == %{ip: "1.1.1.1"}
     end
+
+    test "returns test results for local ip addresses" do
+      Application.put_env(:geoip, :test_results, nil)
+      Application.put_env(:geoip, :default_test_result, %{ip: "123.123.123.123"})
+
+      assert GeoIP.lookup("127.0.0.1") == %{ip: "123.123.123.123"}
+    end
   end
 
   describe "lookup/1 using freegeoip" do
@@ -98,11 +105,11 @@ defmodule GeoIPTest do
       :ok
     end
 
-    test "returns empty result when given localhost" do
+    test "returns ip when given localhost" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
     end
 
-    test "returns empty result when given localhost ip" do
+    test "returns ip when given localhost ip" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("127.0.0.1")
     end
 
@@ -247,11 +254,11 @@ defmodule GeoIPTest do
       :ok
     end
 
-    test "returns empty result when given localhost" do
+    test "returns ip when given localhost" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
     end
 
-    test "returns empty result when given localhost ip" do
+    test "returns ip when given localhost ip" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("127.0.0.1")
     end
 
@@ -351,11 +358,11 @@ defmodule GeoIPTest do
       :ok
     end
 
-    test "returns empty result when given localhost" do
+    test "returns ip when given localhost" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("localhost")
     end
 
-    test "returns empty result when given localhost ip" do
+    test "returns ip when given localhost ip" do
       {:ok, %{ip: "127.0.0.1"}} = GeoIP.lookup("127.0.0.1")
     end
 

@@ -1,15 +1,17 @@
 defmodule GeoIP.Lookup do
   alias GeoIP.{Config, Error}
 
+  @localhosts ~w[
+    localhost
+    127.0.0.1
+    ::1
+  ]
+
   def lookup(nil), do: %{}
 
   def lookup(%{remote_ip: host}), do: lookup(host)
 
   def lookup(host) when is_tuple(host), do: host |> Tuple.to_list() |> Enum.join(".") |> lookup
-
-  def lookup("localhost"), do: lookup("127.0.0.1")
-
-  def lookup("127.0.0.1" = ip), do: {:ok, %{ip: ip}}
 
   def lookup(host) when is_binary(host) do
     case get_from_cache(host) do
@@ -28,6 +30,8 @@ defmodule GeoIP.Lookup do
   defp get_from_provider(host, :test) do
     Map.get(Config.test_results(), host, Config.default_test_result())
   end
+
+  defp get_from_provider(host, _provider) when host in @localhosts, do: {:ok, %{ip: "127.0.0.1"}}
 
   defp get_from_provider(host, provider) do
     host
