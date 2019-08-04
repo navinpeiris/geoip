@@ -33,7 +33,7 @@ defmodule GeoIP.Mixfile do
       {:poison, "~> 2.0 or ~> 3.0"},
       {:cachex, "~> 3.0"},
       {:ex_doc, ">= 0.0.0", only: :dev},
-      {:mock, "~> 0.3", only: :test}
+      {:mock, "~> 0.3.3", only: :test}
     ]
   end
 
