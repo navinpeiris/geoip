@@ -1,3 +1,7 @@
+# v0.2.5
+
+- Use [jason](https://github.com/michalmuskala/jason) instead of [poison](https://github.com/devinus/poison).
+
 # v0.2.4
 
 - [#13](https://github.com/navinpeiris/geoip/pull/13) Compatibility with Poison v4.0
