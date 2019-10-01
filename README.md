@@ -107,6 +107,14 @@ Or to change the time limit of cached results:
 config :geoip, cache_ttl_secs: 1800 # 30 mins
 ```
 
+### Extra parameters
+
+You can add extra query parameters to geoip service requests via `:extra_params` config option:
+
+```elixir
+config :geoip, extra_params: [language: "RU"]
+```
+
 ## Usage
 
 You can pass in an IP address (as a string or a struct), hostname or a `Plug.Conn` struct to be looked up.
