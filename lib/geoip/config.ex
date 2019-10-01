@@ -16,6 +16,8 @@ defmodule GeoIP.Config do
   def test_results, do: get(:test_results) || %{}
 
   def default_test_result, do: get(:default_test_result)
+  
+  def extra_params, do: (get(:extra_params) || []) |> URI.encode_query()
 
   defp get!(key) do
     get(key) || raise(ArgumentError, "Missing configuration parameter `:#{key}`")
