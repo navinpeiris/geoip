@@ -1,3 +1,7 @@
+# v0.2.6
+
+- [#14](https://github.com/navinpeiris/geoip/pull/14) :extra_params config option
+
 # v0.2.5
 
 - Use [jason](https://github.com/michalmuskala/jason) instead of [poison](https://github.com/devinus/poison).
