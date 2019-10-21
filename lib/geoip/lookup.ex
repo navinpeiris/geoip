@@ -81,7 +81,7 @@ defmodule GeoIP.Lookup do
       }"
       
   defp lookup_url(host, :sypexgeo),
-    do: "#{http_protocol()}://#{Config.url!() || "api.sypexgeo.net"}/#{Config.api_key()}/json/#{host}?#{
+    do: "#{http_protocol()}://#{Config.url() || "api.sypexgeo.net"}/#{Config.api_key()}/json/#{host}?#{
         Config.extra_params()
       }"
     
