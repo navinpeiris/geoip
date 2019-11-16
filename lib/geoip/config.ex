@@ -2,6 +2,8 @@ defmodule GeoIP.Config do
   def provider!, do: get!(:provider)
 
   def url!, do: get!(:url)
+  
+  def url, do: get(:url)
 
   def api_key!, do: get!(:api_key)
 
