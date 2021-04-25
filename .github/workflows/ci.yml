@@ -1,0 +1,72 @@
+# base configuration pulled from:
+# https://github.com/dashbitco/broadway/blob/master/.github/workflows/ci.yml
+
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    # using `ubuntu-latest` does not support older OTP versions
+    runs-on: ubuntu-18.04
+    env:
+      MIX_ENV: test
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # https://repo.hex.pm/builds/elixir/builds.txt
+          - pair:
+              elixir: 1.5.3
+              otp: 18.3
+          - pair:
+              elixir: 1.6.4
+              otp: 19.3
+          - pair:
+              elixir: 1.7.4
+              otp: 20.3
+          - pair:
+              elixir: 1.8.2
+              otp: 21.3
+          - pair:
+              elixir: 1.9.4
+              otp: 22.3
+          - pair:
+              elixir: 1.10.4
+              otp: 23.3
+          - pair:
+              elixir: 1.11.3
+              otp: 23.3
+            lint: lint
+            coverage: coverage
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.pair.otp}}
+          elixir-version: ${{matrix.pair.elixir}}
+
+      - name: Install Dependencies
+        run: mix deps.get --only test
+
+      - run: mix format --check-formatted
+        if: ${{ matrix.lint }}
+
+      - run: mix deps.get && mix deps.unlock --check-unused
+        if: ${{ matrix.lint }}
+
+      - run: mix deps.compile
+
+      - run: mix compile --warnings-as-errors
+        if: ${{ matrix.lint }}
+
+      - run: mix test
+
+      - run: mix coveralls.github
+        if: ${{matrix.coverage}}

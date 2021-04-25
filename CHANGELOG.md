@@ -1,3 +1,7 @@
+# Unreleased
+
+* Bumped httpoison and cachex to eliminate deprecation warnings
+* Dropped support for Elxir < 1.5
 # v0.2.6
 
 - [#14](https://github.com/navinpeiris/geoip/pull/14) :extra_params config option
