@@ -4,6 +4,8 @@ defmodule GeoIP do
   @moduledoc """
   Elixir library to lookup the geo location for an IP address or hostname using freegeoip.net
 
+  ## Examples
+
       iex> GeoIP.lookup("google.com")
       {:ok,
        %{
@@ -20,6 +22,7 @@ defmodule GeoIP do
         zip_code: "94107"
         }
       }
+
   """
 
   use Application
@@ -46,14 +49,13 @@ defmodule GeoIP do
 
   This function returns `{:ok, response}` if the lookup is successful, `{:error, %GeoIP.Error{reason: reason}}` otherwise.
 
-  ## Examples:
+  ## Examples
 
-  ```ex
-  {:ok, location} = GeoIP.lookup({8, 8, 8, 8})
-  {:ok, location} = GeoIP.lookup("8.8.8.8")
-  {:ok, location} = GeoIP.lookup("google.com")
-  {:ok, location} = GeoIP.lookup(conn)         # A `Plug.Conn` instance
-  ```
+      {:ok, location} = GeoIP.lookup({8, 8, 8, 8})
+      {:ok, location} = GeoIP.lookup("8.8.8.8")
+      {:ok, location} = GeoIP.lookup("google.com")
+      {:ok, location} = GeoIP.lookup(conn)         # A `Plug.Conn` instance
+
   """
   def lookup(host), do: GeoIP.Lookup.lookup(host)
 end

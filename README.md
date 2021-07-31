@@ -1,11 +1,13 @@
-<p align="center"><img src="logo/verticalversion.png" alt="geoip" height="200px"></p>
+<p align="center"><img src="assets/verticalversion.png" alt="geoip" height="200px"></p>
 
 # GeoIP
 
 [![Build Status](https://travis-ci.org/navinpeiris/geoip.svg?branch=master)](https://travis-ci.org/navinpeiris/geoip)
-[![Hex version](https://img.shields.io/hexpm/v/geoip.svg "Hex version")](https://hex.pm/packages/geoip)
-[![Hex downloads](https://img.shields.io/hexpm/dt/geoip.svg "Hex downloads")](https://hex.pm/packages/geoip)
-[![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+[![Module Version](https://img.shields.io/hexpm/v/geoip.svg)](https://hex.pm/packages/geoip)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/geoip/)
+[![Total Download](https://img.shields.io/hexpm/dt/geoip.svg)](https://hex.pm/packages/geoip)
+[![License](https://img.shields.io/hexpm/l/geoip.svg)](https://github.com/navinpeiris/geoip/blob/master/LICENSE.md)
+[![Last Updated](https://img.shields.io/github/last-commit/navinpeiris/geoip.svg)](https://github.com/navinpeiris/geoip/commits/master)
 
 Elixir library to lookup the geographic location for a given IP address, hostname, or `Plug.Conn`.
 
@@ -13,18 +15,21 @@ The returned results are cached for an hour by default so that we don't hit the 
 
 ## Installation
 
-1. Add `geoip` to your list of dependencies in `mix.exs`:
+Add `:geoip` to your list of dependencies in `mix.exs`:
 
-  ```elixir
-  def deps do
-    [{:geoip, "~> 0.2"}]
-  end
-  ```
+```elixir
+def deps do
+  [
+    {:geoip, "~> 0.2"}
+  ]
+end
+```
 
-2. Update your mix dependencies
-  ```
-  mix deps.get
-  ```
+Update your mix dependencies:
+
+```elixir
+mix deps.get
+```
 
 ## Configuration
 
@@ -68,21 +73,21 @@ The `test_results` param is a map of host to lookup results that should be retur
 
 ```elixir
 config :geoip,
-       provider: :test,
-       test_results: %{ # optional
-         "host.1" => %{
-           ip: "123.123.123.123",
-           # ......
-         },
-         "host.2" => %{
-           ip: "1.1.1.1",
-           # ......
-         },
-       },
-       default_test_result: %{ # optional
-         ip: "192.168.3.3",
-         # ......
-       }
+  provider: :test,
+  test_results: %{ # optional
+   "host.1" => %{
+     ip: "123.123.123.123",
+     # ......
+   },
+   "host.2" => %{
+     ip: "1.1.1.1",
+     # ......
+   },
+  },
+  default_test_result: %{ # optional
+   ip: "192.168.3.3",
+   # ......
+  }
 ```
 
 ### Caching
@@ -141,26 +146,9 @@ Special thanks to [@batarian71](https://github.com/batarian71) for designing and
 * https://github.com/knrz/geocoder
 * https://github.com/amotion-city/lib_lat_lon
 
-## License
+## Copyright and License
 
-The MIT License
+Copyright (c) 2016 Navin Peiris
 
-Copyright (c) 2016-present Navin Peiris
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+This work is free. You can redistribute it and/or modify it under the
+terms of the MIT License. See the [LICENSE.md](./LICENSE.md) file for more details.
