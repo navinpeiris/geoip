@@ -26,14 +26,6 @@ The returned results are cached for an hour by default so that we don't hit the 
   mix deps.get
   ```
 
-3. Add `geoip` to your applications list if you're using Elixir version 1.3 or lower
-
-  ```elixir
-  def application do
-    [applications: [:geoip]]
-  end
-  ```
-
 ## Configuration
 
 ### Provider
@@ -142,6 +134,12 @@ If your application is running behind a proxy, we recommend using [ajvondrak/rem
 ## GeoIP logo
 
 Special thanks to [@batarian71](https://github.com/batarian71) for designing and providing this project with an awesome logo
+
+## Related Packages
+
+* https://github.com/elixir-geolix/geolix If you want to use the [MaxMind files directly](https://github.com/navinpeiris/geoip/issues/1)
+* https://github.com/knrz/geocoder
+* https://github.com/amotion-city/lib_lat_lon
 
 ## License
 
