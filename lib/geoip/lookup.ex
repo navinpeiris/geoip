@@ -53,7 +53,10 @@ defmodule GeoIP.Lookup do
   defp put_in_cache(result, _), do: result
 
   defp parse_response({:ok, %HTTPoison.Response{status_code: 200, body: body}}) do
-    {:ok, Jason.decode!(body, keys: :atoms)}
+    case Jason.decode(body, keys: :atoms) do
+      {:ok, json} -> {:ok, json}
+      {:error, error} -> {:error, %Error{reason: error}}
+    end
   end
 
   defp parse_response({:ok, %HTTPoison.Response{status_code: _, body: body}}) do

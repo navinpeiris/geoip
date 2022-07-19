@@ -180,6 +180,17 @@ defmodule GeoIPTest do
         {:error, _} = GeoIP.lookup("invalidhost")
       end
     end
+
+    test "returns error when a non-JSON response is received" do
+      for status <- [200, 400, 404, 500] do
+        html = "<html><body>Error!</body>"
+        mock_response = {:ok, %HTTPoison.Response{status_code: status, body: html}}
+
+        with_mock(HTTPoison, get: fn _ -> mock_response end) do
+          {:error, _} = GeoIP.lookup("github.com")
+        end
+      end
+    end
   end
 
   describe "lookup/1 using ipstack" do
