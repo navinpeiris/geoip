@@ -49,7 +49,7 @@ config :geoip, provider: :freegeoip, url: "https://geoip.example.com"
 
 #### ipstack
 
-[ipstack](ipstack.com) provides a free tier although it requires you to sign up and get an api key first.
+[ipstack](https://ipstack.com) provides a free tier although it requires you to sign up and get an api key first.
 
 NOTE: The free tier does not allow https access so you _must_ specify `use_https: false` below.
 
@@ -59,7 +59,7 @@ config :geoip, provider: :ipstack, api_key: "your-api-key"
 
 #### ipinfo
 
-[ipinfo](ipinfo.io) does not unfortunately support lookup by hostname (only ip address), therefore the above examples where a hostname is used will return an error.
+[ipinfo](https://ipinfo.io) does not unfortunately support lookup by hostname (only ip address), therefore the above examples where a hostname is used will return an error.
 
 ```elixir
 config :geoip, provider: :ipinfo, api_key: "your-api-key"
