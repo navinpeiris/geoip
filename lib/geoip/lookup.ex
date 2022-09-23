@@ -36,7 +36,7 @@ defmodule GeoIP.Lookup do
   defp get_from_provider(host, provider) do
     host
     |> lookup_url(provider)
-    |> HTTPoison.get()
+    |> HTTPoison.get(http_headers(provider))
     |> parse_response
   end
 
@@ -84,11 +84,25 @@ defmodule GeoIP.Lookup do
       "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key()}#{
         Config.extra_params()
       }"
-
+      
+  defp lookup_url(host, :sypexgeo),
+    do: "#{http_protocol()}://#{Config.url() || "api.sypexgeo.net"}/#{Config.api_key()}/json/#{host}?#{
+        Config.extra_params()
+      }"
+      
+  defp lookup_url(host, :dadata),
+    do: "#{http_protocol()}://suggestions.dadata.ru/suggestions/api/4_1/rs/iplocate/address?ip=#{host}"
+    
   defp lookup_url(_host, provider) do
     raise ArgumentError,
           "Unknown provider: '#{inspect(provider)}'. Please check your geoip configuration."
   end
+  
+  defp http_headers(:dadata),
+    do: [{"Authorization", "Token #{Config.api_key()}"}]
+    
+  defp http_headers(_),
+    do: []
 
   defp http_protocol do
     if Config.use_https() do
