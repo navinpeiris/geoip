@@ -34,7 +34,7 @@ defmodule GeoIP.Mixfile do
       {:cachex, "~> 3.3"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:mock, "~> 0.3.3", only: :test},
-      {:excoveralls, "~> 0.14.2", only: :test}
+      {:excoveralls, "~> 0.15.1", only: :test}
     ]
   end
 
