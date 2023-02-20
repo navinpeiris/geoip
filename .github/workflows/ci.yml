@@ -7,66 +7,63 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - "*"
 
 jobs:
+  lint:
+    runs-on: ${{ matrix.os }}
+    env:
+      MIX_ENV: dev
+    name: Lint
+    strategy:
+      matrix:
+        os: ["ubuntu-20.04"]
+        elixir: ["1.14"]
+        otp: ["25"]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+      - uses: actions/cache@v3
+        with:
+          path: deps
+          key: ${{ matrix.os }}-otp_${{ matrix.otp }}-elixir_${{ matrix.elixir }}-mix_${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ matrix.os }}-otp_${{ matrix.otp }}-elixir_${{ matrix.elixir }}-mix_
+      - run: mix deps.get
+      - run: mix deps.compile
+      - run: mix format --check-formatted
+      - run: mix deps.unlock --check-unused
+      - run: mix compile --warnings-as-errors
+
   test:
-    # using `ubuntu-latest` does not support older OTP versions
-    runs-on: ubuntu-18.04
+    runs-on: ${{ matrix.os }}
     env:
       MIX_ENV: test
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    name: Test Elixir ${{ matrix.elixir }}, OTP ${{ matrix.otp }}, OS ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: ["ubuntu-20.04"]
+        elixir: ["1.14", "1.13", "1.12"]
+        otp: ["25", "24", "23"]
+        exclude:
+          - elixir: "1.12"
+            otp: "25"
         include:
-          # https://repo.hex.pm/builds/elixir/builds.txt
-          - pair:
-              elixir: 1.5.3
-              otp: 18.3
-          - pair:
-              elixir: 1.6.4
-              otp: 19.3
-          - pair:
-              elixir: 1.7.4
-              otp: 20.3
-          - pair:
-              elixir: 1.8.2
-              otp: 21.3
-          - pair:
-              elixir: 1.9.4
-              otp: 22.3
-          - pair:
-              elixir: 1.10.4
-              otp: 23.3
-          - pair:
-              elixir: 1.11.3
-              otp: 23.3
-            lint: lint
+          - elixir: "1.14"
+            opt: "25"
             coverage: coverage
     steps:
       - uses: actions/checkout@v3
-
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{matrix.pair.otp}}
-          elixir-version: ${{matrix.pair.elixir}}
-
-      - name: Install Dependencies
-        run: mix deps.get --only test
-
-      - run: mix format --check-formatted
-        if: ${{ matrix.lint }}
-
-      - run: mix deps.get && mix deps.unlock --check-unused
-        if: ${{ matrix.lint }}
-
+          otp-version: ${{matrix.otp}}
+          elixir-version: ${{matrix.elixir}}
+      - run: mix deps.get --only test
       - run: mix deps.compile
-
-      - run: mix compile --warnings-as-errors
-        if: ${{ matrix.lint }}
-
       - run: mix test
-
       - run: mix coveralls.github
         if: ${{matrix.coverage}}
