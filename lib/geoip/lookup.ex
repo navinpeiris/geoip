@@ -75,15 +75,11 @@ defmodule GeoIP.Lookup do
 
   defp lookup_url(host, :ipstack),
     do:
-      "#{http_protocol()}://api.ipstack.com/#{host}?access_key=#{Config.api_key!()}#{
-        Config.extra_params()
-      }"
+      "#{http_protocol()}://api.ipstack.com/#{host}?access_key=#{Config.api_key!()}#{Config.extra_params()}"
 
   defp lookup_url(host, :ipinfo),
     do:
-      "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key()}#{
-        Config.extra_params()
-      }"
+      "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key()}#{Config.extra_params()}"
 
   defp lookup_url(_host, provider) do
     raise ArgumentError,
