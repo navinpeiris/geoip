@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## v0.2.7 - 2021-09-03
+
 - Bumped httpoison and cachex to eliminate deprecation warnings
 - Dropped support for Elxir < 1.5
 
