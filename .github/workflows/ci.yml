@@ -48,7 +48,7 @@ jobs:
       matrix:
         os: ["ubuntu-latest"]
         elixir: ["1.15", "1.14", "1.13", "1.12"]
-        otp: ["26", "25", "24"]
+        otp: ["26", "25"]
         exclude:
           - elixir: "1.12"
             otp: "25"
