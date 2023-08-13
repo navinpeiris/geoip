@@ -52,6 +52,10 @@ jobs:
         exclude:
           - elixir: "1.12"
             otp: "25"
+          - elixir: "1.12"
+            otp: "26"
+          - elixir: "1.13"
+            otp: "26"
         include:
           - elixir: "1.14"
             opt: "25"
