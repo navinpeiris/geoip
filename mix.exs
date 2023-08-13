@@ -29,7 +29,7 @@ defmodule GeoIP.Mixfile do
 
   defp deps do
     [
-      {:httpoison, "~> 1.8"},
+      {:httpoison, "~> 2.1"},
       {:jason, "~> 1.1"},
       {:cachex, "~> 3.3"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
