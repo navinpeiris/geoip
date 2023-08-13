@@ -2,7 +2,7 @@ defmodule GeoIP.Mixfile do
   use Mix.Project
 
   @source_url "https://github.com/navinpeiris/geoip"
-  @version "0.2.7"
+  @version "0.2.8"
 
   def project do
     [
