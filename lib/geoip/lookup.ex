@@ -81,7 +81,6 @@ defmodule GeoIP.Lookup do
     do:
       "#{http_protocol()}://ipinfo.io/#{host}/json?token=#{Config.api_key()}#{Config.extra_params()}"
 
-
   defp lookup_url(host, :ip2locationio),
     do:
       "#{http_protocol()}://api.ip2location.io/?key=#{Config.api_key()}&ip=#{host}#{Config.extra_params()}"
