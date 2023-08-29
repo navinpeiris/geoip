@@ -65,6 +65,16 @@ config :geoip, provider: :ipstack, api_key: "your-api-key"
 config :geoip, provider: :ipinfo, api_key: "your-api-key"
 ```
 
+#### IP2Location.io
+
+[IP2Location.io](https://ip2location.io) does not support lookup by hostname (only ip address), therefore the above examples where a hostname is used will return an error.
+
+NOTE: Translation for certain columns is available for Plus and Security plan. You can visit the Parameters section in [https://www.ip2location.io/ip2location-documentation](https://www.ip2location.io/ip2location-documentation) for more information
+
+```elixir
+config :geoip, provider: :ip2locationio, api_key: "your-api-key"
+```
+
 #### test
 
 Provides an easy way to provide mock lookup data in test environments.
