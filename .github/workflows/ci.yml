@@ -21,7 +21,7 @@ jobs:
         elixir: ["1.14"]
         otp: ["25"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{ matrix.otp }}
@@ -61,7 +61,7 @@ jobs:
             opt: "25"
             coverage: coverage
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
           otp-version: ${{matrix.otp}}
